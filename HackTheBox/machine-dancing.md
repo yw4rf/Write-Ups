@@ -14,7 +14,7 @@ Platform: Hack The Box
 Level: Very Easy
 ```
 
-![Dancing pwned]([../../../assets/HTB/Dancing/dancing-pwnd.png](https://yw4rf.vercel.app/_astro/dancing-pwnd.C_asCQVS_15UY9B.webp))
+![Dancing pwned](https://yw4rf.vercel.app/_astro/dancing-pwnd.C_asCQVS_15UY9B.webp)
 
 ## Enumeración 
 
