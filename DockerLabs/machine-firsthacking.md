@@ -9,7 +9,7 @@ categories: ['WriteUp', 'DockerLabs']
 
 DockerLabs es una plataforma gratuita diseñada para la práctica de hacking ético. En esta ocasión, abordaremos la máquina FirstHacking, en la cual aprenderemos a explotar la vulnerabilidad en la versión 2.3.4 de vsftpd, un servicio FTP que opera en el puerto 21.
 
-![Descarga](https://yw4rf.vercel.app/_astro/firsthacking-1.Cw3rWVWN_Lri1B.webp)
+![Descarga](https://old-blog-yw4rf.vercel.app/_astro/firsthacking-1.Cw3rWVWN_Lri1B.webp)
 ```
 Platform: DockerLabs
 Level: Very Easy
@@ -19,15 +19,15 @@ Level: Very Easy
 
 Primero, descargamos la máquina desde la página oficial de [DockerLabs](https://dockerlabs.es)
 
-![Extracción](https://yw4rf.vercel.app/_astro/firsthacking-2.By0ZAWf8_1tkwGc.webp)
+![Extracción](https://old-blog-yw4rf.vercel.app/_astro/firsthacking-2.By0ZAWf8_1tkwGc.webp)
 
 Una vez descargada, veremos que está comprimida. Procedemos a la extracción mediante una herramienta de descompresión. En mi caso, usaré **Unzip**.
 
-![Ejecución](https://yw4rf.vercel.app/_astro/firsthacking-3.jkIad5Tw_dKyoo.webp)
+![Ejecución](https://old-blog-yw4rf.vercel.app/_astro/firsthacking-3.jkIad5Tw_dKyoo.webp)
 
 Una vez extraídos los archivos, ejecutaremos la maquina
 
-![Ping](https://yw4rf.vercel.app/_astro/firsthacking-4.Cg94UyrT_CPa76.webp)
+![Ping](https://old-blog-yw4rf.vercel.app/_astro/firsthacking-4.Cg94UyrT_CPa76.webp)
 
 Una vez desplegada la máquina, nos indicará la **Dirección IP** objetivo y que, al terminar con la máquina, la eliminemos mediante **CTRL + C**.
 
@@ -41,7 +41,7 @@ Primero, verificaremos la conectividad con la máquina objetivo mediante el coma
 
 Una vez verificada la conexión, podemos observar que se trata de una máquina **Linux**, esto se debe a que el **ttl=64** (Time To Live es igual a 64).
 
-![Escaneo](https://yw4rf.vercel.app/_astro/firsthacking-5.z4SoNvCC_Z2hLzPS.webp)
+![Escaneo](https://old-blog-yw4rf.vercel.app/_astro/firsthacking-5.z4SoNvCC_Z2hLzPS.webp)
 
 Procedemos a hacer un escaneo de servicios y puertos abiertos con la herramienta de escaneo de redes **Nmap**.
 
@@ -57,7 +57,7 @@ Procedemos a hacer un escaneo de servicios y puertos abiertos con la herramienta
 - `172.17.0.2`: Dirección IP del objetivo.
 - `-oG firstHacking-scan`: Guarda los resultados en formato "Grepable" en el archivo `firstHacking-scan`.
 
-![Escaneo FTP](https://yw4rf.vercel.app/_astro/firsthacking-6.CFqgcXhM_Z12YIyA.webp)
+![Escaneo FTP](https://old-blog-yw4rf.vercel.app/_astro/firsthacking-6.CFqgcXhM_Z12YIyA.webp)
 
 Como vemos, tenemos el puerto **21/tcp** que corre el servicio **FTP**. Haremos un escaneo específico a ese puerto con las flags `-sC` y `-sV`.
 
@@ -66,19 +66,19 @@ Como vemos, tenemos el puerto **21/tcp** que corre el servicio **FTP**. Haremos 
 - `-sV`: Detecta la **versión del servicio** que se está ejecutando en el puerto.
 - `172.17.0.2`: **Dirección IP** del host objetivo.
 
-![Vulnerabilidad](https://yw4rf.vercel.app/_astro/firsthacking-7.DrWk7tZ0_ZLKjKH.webp)
+![Vulnerabilidad](https://old-blog-yw4rf.vercel.app/_astro/firsthacking-7.DrWk7tZ0_ZLKjKH.webp)
 
 Como vemos, hay información sobre la **versión** del puerto **FTP**. La versión es `vsftpd 2.3.4`. Buscaremos en Google esa versión para encontrar una posible vulnerabilidad.
 
-![Línea de comandos](https://yw4rf.vercel.app/_astro/firsthacking-9.DDbfWNWc_ZPcR05.webp)
+![Línea de comandos](https://old-blog-yw4rf.vercel.app/_astro/firsthacking-9.DDbfWNWc_ZPcR05.webp)
 
 Encontramos un **Backdoor Command Execution** en la página de **Exploit Database (ExploitDB)**, una base de datos de exploits y técnicas de explotación mantenida por Offensive Security.
 
-![Exploit descargado](https://yw4rf.vercel.app/_astro/firsthacking-10.DxryziuS_Z282KQD.webp)
+![Exploit descargado](https://old-blog-yw4rf.vercel.app/_astro/firsthacking-10.DxryziuS_Z282KQD.webp)
 
 ExploitDB permite buscar exploits y vulnerabilidades en su base de datos desde la **línea de comandos**. Esto lo haremos mediante la herramienta **searchsploit**
 
-![ExploitDB](https://yw4rf.vercel.app/_astro/firsthacking-8.Cph0vE6w_dQjzW.webp)
+![ExploitDB](https://old-blog-yw4rf.vercel.app/_astro/firsthacking-8.Cph0vE6w_dQjzW.webp)
 
 ## Explotación
 
@@ -94,14 +94,14 @@ Utilizaremos el comando de la herramienta `searchsploit -m unix/remote/49757.py`
 
 Con el script descargado en nuestro sistema, lo ejecutaremos usando **python3**, el **script** y especificando la **dirección IP** del host objetivo.
 
-![Root](https://yw4rf.vercel.app/_astro/firsthacking-12.gatnuoYv_ZhPcxO.webp)
+![Root](https://old-blog-yw4rf.vercel.app/_astro/firsthacking-12.gatnuoYv_ZhPcxO.webp)
 
 Una vez dentro, ejecutamos el comando `whoami` o `id` y, como vemos, somos **root**.
 
-![Root](https://yw4rf.vercel.app/_astro/firsthacking-14.BwQP8AIC_Z1PpF1d.webp)
+![Root](https://old-blog-yw4rf.vercel.app/_astro/firsthacking-14.BwQP8AIC_Z1PpF1d.webp)
 
 También podríamos utilizar el comando `script /dev/null -c bash`, el cual ejecuta una sesión de `bash` mientras redirige la salida de `script` a `/dev/null`, lo que significa que no guarda el registro de la sesión en un archivo.
 
-![Sesión bash](https://yw4rf.vercel.app/_astro/firsthacking-15.DuzWJz3V_ZO4GQh.webp)
+![Sesión bash](https://old-blog-yw4rf.vercel.app/_astro/firsthacking-15.DuzWJz3V_ZO4GQh.webp)
 
 Una vez dentro, ya hemos obtenido control total y, por ende, damos por concluida la máquina.
