@@ -6,74 +6,90 @@ categories: ['WriteUp', 'HackTheBox', 'CTF']
 --- 
 
 
-## Introduction 
+## Introduction
 
-In this walkthrough, we'll use Nmap for port scanning to identify open ports and services, focusing on FTP on port 21. We'll enumerate the FTP service, exploit anonymous login, and download the flag.
+In this walkthrough, we will use Nmap to scan ports to identify open ports and services, focusing on Telnet on port 23. We will enumerate, perform brute force attacks, and unload the flag.
+
+
 ```
 Platform: Hack The Box
-Level: Very Easy 
+Level: Very Easy
 ```
 
+![Meow pwned yw4rf](https://old-blog-yw4rf.vercel.app/_astro/meow-6.BpHm5Bkn_2aKIJ.webp)
 
-![Fawn machine complete yw4rf](https://yw4rf.vercel.app/_astro/1-Fawn.DLpEjN8C_G0HJ.webp)
 
 ## Enumeration
-
 ```
-target: 10.129.97.198  
+target: 10.129.48.113  
 ```
 <br>
 
-First, we use the command `ping -c 1 10.129.97.198` to check connectivity. 
+Initially, we use the `Ping` command. This utilizes the **ICMP (Internet Control Message Protocol)**. Specifically, `Ping` sends an ICMP "echo request" message to an `IP address` and expects to receive an "echo reply" message in response. This process allows us to verify if a machine on the network is accessible and measure the time it takes to receive a response (known as latency).
 
-![Fawn hackthebox yw4rf](https://yw4rf.vercel.app/_astro/2-Fawn.PGV5Jxm1_11kC0P.webp)
+`ping -c 1 10.129.48.113`
 
-Since we are connected, we begin with the **Port scanning using the Nmap tool**, hoping to find open ports and running services:
+![Ping command](https://old-blog-yw4rf.vercel.app/_astro/meow-1.DiLmyByw_ZauPr8.webp)
 
-![Fawn hackthebox yw4rf](https://yw4rf.vercel.app/_astro/4-Fawn.CCEa5hgk_27PCOd.webp)
+Since the packet was received from the target computer, we can confirm that it is operational.
 
-As you may notice, at the end of the Nmap command, I wrote `-oG fawn-scan`, which saves the scan results in **"grepable" format (grepable output)**. This format is simpler and more compact than the standard output, allowing us to easily **extract specific information**. Here, we run it using the **cat** command. We can see that the status is **"Up"** along with information about the ports and their versions.
+Next, an Nmap (Network Mapper) scan is performed to enumerate all open TCP ports on the target machine in detail.
 
-![Fawn hackthebox yw4rf](https://yw4rf.vercel.app/_astro/3-Fawn.aJfQzRP5_Z1M5RyJ.webp)
+![Nmap command](https://old-blog-yw4rf.vercel.app/_astro/meow-2.BrnQL7Ta_Z23Tv0v.webp)
 
-`21/open/tcp//ftp/vsftpd 3.0.3/` We can conclude that the only open port is **21**, which runs the **FTP** protocol, and its version is **vsftpd 3.0.3**.
+`sudo nmap -p- --open -sV --min-rate 5000 -n -Pn -vvv 10.129.48.113 -oG meow-scan`
 
-## FTP Enumeration
-
-To gather more information about port 21, we’ll perform a scan specifically on this port using the Nmap flag `-sCV`.
-
-![Fawn hackthebox yw4rf](https://yw4rf.vercel.app/_astro/4-Fawn.CCEa5hgk_27PCOd.webp)
-
-We see that it says `ftp-anon: Anonymous FTP login allowed`, there is a file named `flag.txt`, and we are on a `UNIX` operating system.
-
-
-   ```
-Anonymous FTP: This is a method that allows entry into an FTP server without needing to authenticate with an account and password. Users connect to the server using the username "anonymous" (or "ftp" in some cases) and any password. 
 ```
+- Nmap: Network scanning tool.
 
+- -p-: Instructs Nmap to scan all available ports, from 1 to 65535.
 
-We connect to the FTP server using the FTP client on the target. For the username, we use **Anonymous**, and for the password, in this case, nothing (press enter). **We successfully connect to the target FTP server**.
+- --open: Filters Nmap results to show only open ports.
 
-![Fawn hackthebox yw4rf](https://yw4rf.vercel.app/_astro/5-Fawn.BrKbKp9X_HBYUr.webp)
+- -sV: Enables service detection. Nmap will attempt to identify the versions running on the open ports.
 
-## Exploitation phase
+- --min-rate 5000: Sets a minimum rate of 5000 packets per second to speed up the scan.
 
-We use the `ls` command to list files or directories.
+- -n: Avoids DNS resolution. Nmap will not try to convert IP addresses into domain names, which can make the scan faster.
 
-![Fawn hackthebox yw4rf](https://yw4rf.vercel.app/_astro/6-Fawn.CmthWryW_Z7O9BR.webp)
+- -Pn: Disables the initial host discovery ("ping scan") and treats all hosts as if they are active.
 
-Once we find the `flag.txt` file, we can download it to our local machine. After downloading it, we can exit.
+- 10.129.48.113: Specifies the IP address of the target to scan.
 
-![Fawn hackthebox yw4rf](https://yw4rf.vercel.app/_astro/7-Fawn.CnCjtEd7_Z1tjlSM.webp)
+- -Og meow-scan: Indicates that the scan results should be saved in a "grepable" format (easy to filter or search with commands like grep). The resulting file will be named meow-scan.
+```
+<br>
 
-We go to the directory where the `flag.txt` file was downloaded, and we can open it with the command `cat {filename}`.
+We can see that it found the `port 23/tcp` is open, indicating that the service is `Telnet` with the version `Linux telnetd`.
 
-![Fawn hackthebox yw4rf](https://yw4rf.vercel.app/_astro/8-Fawn.DQ8lG24Z_ZeNucU.webp)
+`PORT   STATE  SERVICE REASON           VERSION 23/tcp open   telnet? syn-ack ttl 63   Linux telnetd`
+
+## Telnet
+
+With a quick search on `Google`, we can see that `Telnet` is a network protocol that allows us to access another machine to remotely manage it as if we were sitting in front of it. It generally uses port 23 and the TCP protocol for data transmission.
+
+One of Telnet's most significant disadvantages is that it does not encrypt transmitted data, including credentials (username and password), making communications vulnerable to "man-in-the-middle" attacks and other forms of eavesdropping.
+
+Using the `Telnet` command and specifying the target `IP Address`, we can log into the machine and perform a brute force attack.
+
+![Brute force attack telnet](https://old-blog-yw4rf.vercel.app/_astro/meow-3.B7VrxIpI_241Kx2.webp)
+
+After trying several login usernames, such as `admin`, `administrator`, we were granted access without a password using the login name `root`.
+
+`Meow login: root`
+
+![Root telnet](https://old-blog-yw4rf.vercel.app/_astro/meow-4.CKPXuNlI_Z23PiPz.webp)
+
+Once we have gained root access on the target machine, we have full control of it.
+
+With the `ls` command, we check the contents of the current directory, where we see the `flag.txt` file, which is the final step to complete the machine. Using the `cat flag.txt` command, we view the contents of the file and obtain the flag.
+
+![Flag captured meow machine](https://old-blog-yw4rf.vercel.app/_astro/meow-5.3Fo_wjEw_UlXa0.webp)
 
 <br>
 
-Once we have captured the flag, **we have completed the Fawn machine**.
+Once we have the flag captured, **we have completed the Fawn machine**.
+![Meow pwnd yw4rf](https://old-blog-yw4rf.vercel.app/_astro/meow-7.B07hYUuM_2fgeRo.webp)
 
-![Fawn hackthebox yw4rf](https://yw4rf.vercel.app/_astro/9-Fawn.wlCfeGrM_Z1FsOTV.webp)
 
 <br>
