@@ -15,7 +15,7 @@ Level: Very Easy
 ```
 
 
-![Fawn machine complete yw4rf](https://yw4rf.vercel.app/_astro/1-Fawn.DLpEjN8C_G0HJ.webp)
+![Fawn machine complete yw4rf](https://old-blog-yw4rf.vercel.app/_astro/1-Fawn.DLpEjN8C_G0HJ.webp)
 
 ## Enumeration
 ```
