@@ -1,13 +1,9 @@
 ---
-title: Injection - DockerLabs
-published: 2024-09-18
-description: 'En este WriteUp, abordaremos la máquina Injection de la plataforma DockerLabs. En esta ocasión, abordaremos la máquina Injection. Realizaremos Escaneo de Puertos, Inyección SQL, Acceso a SSH y Escalada de Privilegios.'
+title: 'Injection - DockerLabs'
+description: "En este WriteUp, abordaremos la máquina Injection de la plataforma DockerLabs. En esta ocasión, abordaremos la máquina Injection. Realizaremos Escaneo de Puertos, Inyección SQL, Acceso a SSH y Escalada de Privilegios."
 pubDate: 'Sep 18 2024'
-image: ''
-tags: [DockerLabs, Machine]
-category: 'WriteUp'
-draft: false 
----
+categories: ['WriteUp', 'DockerLabs']
+--- 
 
 ## Introducción
 
