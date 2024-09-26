@@ -15,7 +15,7 @@ Platform: Hack The Box
 Level: Very Easy
 ```
 
-![Meow pwned yw4rf](https://yw4rf.vercel.app/_astro/meow-6.BpHm5Bkn_2aKIJ.webp)
+![Meow pwned yw4rf](https://old-blog-yw4rf.vercel.app/_astro/meow-6.BpHm5Bkn_2aKIJ.webp)
 
 
 ## Enumeration
@@ -28,13 +28,13 @@ Initially, we use the `Ping` command. This utilizes the **ICMP (Internet Control
 
 `ping -c 1 10.129.48.113`
 
-![Ping command](https://yw4rf.vercel.app/_astro/meow-1.DiLmyByw_ZauPr8.webp)
+![Ping command](https://old-blog-yw4rf.vercel.app/_astro/meow-1.DiLmyByw_ZauPr8.webp)
 
 Since the packet was received from the target computer, we can confirm that it is operational.
 
 Next, an Nmap (Network Mapper) scan is performed to enumerate all open TCP ports on the target machine in detail.
 
-![Nmap command](https://yw4rf.vercel.app/_astro/meow-2.BrnQL7Ta_Z23Tv0v.webp)
+![Nmap command](https://old-blog-yw4rf.vercel.app/_astro/meow-2.BrnQL7Ta_Z23Tv0v.webp)
 
 `sudo nmap -p- --open -sV --min-rate 5000 -n -Pn -vvv 10.129.48.113 -oG meow-scan`
 
@@ -71,24 +71,24 @@ One of Telnet's most significant disadvantages is that it does not encrypt trans
 
 Using the `Telnet` command and specifying the target `IP Address`, we can log into the machine and perform a brute force attack.
 
-![Brute force attack telnet](https://yw4rf.vercel.app/_astro/meow-3.B7VrxIpI_241Kx2.webp)
+![Brute force attack telnet](https://old-blog-yw4rf.vercel.app/_astro/meow-3.B7VrxIpI_241Kx2.webp)
 
 After trying several login usernames, such as `admin`, `administrator`, we were granted access without a password using the login name `root`.
 
 `Meow login: root`
 
-![Root telnet](https://yw4rf.vercel.app/_astro/meow-4.CKPXuNlI_Z23PiPz.webp)
+![Root telnet](https://old-blog-yw4rf.vercel.app/_astro/meow-4.CKPXuNlI_Z23PiPz.webp)
 
 Once we have gained root access on the target machine, we have full control of it.
 
 With the `ls` command, we check the contents of the current directory, where we see the `flag.txt` file, which is the final step to complete the machine. Using the `cat flag.txt` command, we view the contents of the file and obtain the flag.
 
-![Flag captured meow machine](https://yw4rf.vercel.app/_astro/meow-5.3Fo_wjEw_UlXa0.webp)
+![Flag captured meow machine](https://old-blog-yw4rf.vercel.app/_astro/meow-5.3Fo_wjEw_UlXa0.webp)
 
 <br>
 
 Once we have the flag captured, **we have completed the Fawn machine**.
-![Meow pwnd yw4rf](https://yw4rf.vercel.app/_astro/meow-7.B07hYUuM_2fgeRo.webp)
+![Meow pwnd yw4rf](https://old-blog-yw4rf.vercel.app/_astro/meow-7.B07hYUuM_2fgeRo.webp)
 
 
 <br>
