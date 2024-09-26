@@ -14,7 +14,7 @@ Platform: Hack The Box
 Level: Very Easy
 ```
 
-![Dancing pwned](https://yw4rf.vercel.app/_astro/dancing-pwnd.C_asCQVS_15UY9B.webp)
+![Dancing pwned](https://old-blog-yw4rf.vercel.app/_astro/dancing-pwnd.C_asCQVS_15UY9B.webp)
 
 ## Enumeración 
 
@@ -25,15 +25,15 @@ Target: 10.129.241.99
 
 Primero confirmamos conectividad con la maquina con `ping -c 1 {target ip}`
 
-![Dancing machine yw4rf](https://yw4rf.vercel.app/_astro/dancing-1.J0uMCeFl_Z17pYuY.webp)
+![Dancing machine yw4rf](https://old-blog-yw4rf.vercel.app/_astro/dancing-1.J0uMCeFl_Z17pYuY.webp)
 
 Luego de confirmar la conexión, procedemos a escanear al objetivo mediante **Nmap**. 
 
-![Dancing machine yw4rf](https://yw4rf.vercel.app/_astro/dancing-2.CTxlb-ol_Z1ffYzf.webp)
+![Dancing machine yw4rf](https://old-blog-yw4rf.vercel.app/_astro/dancing-2.CTxlb-ol_Z1ffYzf.webp)
 
 Luego de hacer el escaneo vemos varios puertos abiertos, los que mas llaman la atención son los 3 primeros, el `135/tcp`, `139/tcp` y el `445/tcp`. Haremos un escaneo de puertos mas especifico a esos puertos para verificar que servicios y que version corren.
 
-![Dancing machine yw4rf](https://yw4rf.vercel.app/_astro/dancing-3.D_BPUNFa_lKOvk.webp)
+![Dancing machine yw4rf](https://old-blog-yw4rf.vercel.app/_astro/dancing-3.D_BPUNFa_lKOvk.webp)
 
 ## 445 SMB
 
@@ -44,17 +44,17 @@ Como podemos ver `445/tcp` para `SMB` está en funcionamiento, esto significa qu
 
 Es posible utilizar un script llamado `smbclient` para enumerar el contenido de los recursos compartidos en el objetivo. Utilizamos `smbclient --help` para ver las posibles flags
 
-![Dancing machine yw4rf](https://yw4rf.vercel.app/_astro/dancing-4.DfYuwNPp_7d9jd.webp)
+![Dancing machine yw4rf](https://old-blog-yw4rf.vercel.app/_astro/dancing-4.DfYuwNPp_7d9jd.webp)
 
 La que nos interesa es `-L` ya que nos da una lista de los hosts del objetivo. Escribimos `smbclient -L 10.129.241.99`
 
 `smbclient` va a intentar conectarse al host objetivo y comprobará si se requiere alguna autenticación. Como no sabemos el nombre de usuario este usará el predeterminado de nuestra maquina, luego pondremos cualquier contraseña.
 
-![Dancing machine yw4rf](https://yw4rf.vercel.app/_astro/dancing-5.oUFRTQce_Ajo7e.webp)
+![Dancing machine yw4rf](https:old-blog-//yw4rf.vercel.app/_astro/dancing-5.oUFRTQce_Ajo7e.webp)
 
 Nos mostrara los recursos compartidos del host objetivo: 
 
-![Dancing machine yw4rf](https://yw4rf.vercel.app/_astro/dancing-6.CYXZDoPH_Z23IuTR.webp)
+![Dancing machine yw4rf](https://old-blog-yw4rf.vercel.app/_astro/dancing-6.CYXZDoPH_Z23IuTR.webp)
 
 ```
 ADMIN$ = Es una carpeta compartida administrativa que proporciona acceso remoto al sistema de archivos de Windows. Es un recurso oculto (los recursos compartidos ocultos suelen tener un signo de dólar $ al final de su nombre) que da acceso a la carpeta Windows o al directorio raíz de Windows en el sistema.
@@ -73,26 +73,28 @@ Usaremos como USERNAME el default (osea el de nuestra maquina) y la contraseña 
 
 Lo haremos mediante el siguiente comando: `smbclient \\\\{target ip}\\{nombre del recurso compartido}`
 
-![Dancing machine yw4rf](https://yw4rf.vercel.app/_astro/dancing-7.DhBjQtgo_1Pduh6.webp)
+![Dancing machine yw4rf](https://old-blog-yw4rf.vercel.app/_astro/dancing-7.DhBjQtgo_1Pduh6.webp)
 
 Luego de probar todos, logramos entrar a `Workshares`. Usamos el comando `help` para ver una lista de los posibles comandos
 
 Como vemos es posible utilizar `ls` para enlistar 
 
-![Dancing machine yw4rf](https://yw4rf.vercel.app/_astro/dancing-8.Iy9GUYsv_ZaB9QA.webp)
+![Dancing machine yw4rf](https://old-blog-yw4rf.vercel.app/_astro/dancing-8.Iy9GUYsv_ZaB9QA.webp)
 
 Podemos ver que hay 2 carpetas, `Amy.J` y `James.P`, podemos entrar en ellas con el comando `cd`
 
-![Dancing machine yw4rf](https://yw4rf.vercel.app/_astro/dancing-9.4u6rl0Y9_1ReNWJ.webp)
+![Dancing machine yw4rf](https://old-blog-yw4rf.vercel.app/_astro/dancing-9.4u6rl0Y9_1ReNWJ.webp)
 
 La carpeta `Amy.J` contiene el archivo **worknotes.txt** y `James.P` contiene el archivo `flag.txt`. Los dos archivos pueden descargarse mediante el comando `get {file_name}`
 
-![Dancing machine yw4rf](https://yw4rf.vercel.app/_astro/dancing-10.Cj_gH9Jd_13Lylf.webp)
+![Dancing machine yw4rf](https://old-blog-yw4rf.vercel.app/_astro/dancing-10.Cj_gH9Jd_13Lylf.webp)
 
 Una vez descargada la flag podriamos abrirla con el comando `cat`
 
-![Dancing machine yw4rf](https://yw4rf.vercel.app/_astro/dancing-11.BWzChQpd_1BNIgv.webp)
+![Dancing machine yw4rf](https://old-blog-yw4rf.vercel.app/_astro/dancing-11.BWzChQpd_1BNIgv.webp)
 
 Ya tendriamos la maquina hecha
+
+![Dancing machine pwned yw4rf](https://old-blog-yw4rf.vercel.app/_astro/dancing-last.dGN8pK0h_Z1GSgxl.webp)
 
 ![Dancing machine pwned yw4rf](https://yw4rf.vercel.app/_astro/dancing-last.dGN8pK0h_Z1GSgxl.webp)
