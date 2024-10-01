@@ -33,13 +33,13 @@ Since we are connected, we begin with the **Port scanning using the Nmap tool**,
 
 As you may notice, at the end of the Nmap command, I wrote `-oG fawn-scan`, which saves the scan results in **"grepable" format (grepable output)**. This format is simpler and more compact than the standard output, allowing us to easily **extract specific information**. Here, we run it using the **cat** command. We can see that the status is **"Up"** along with information about the ports and their versions.
 
-![Fawn hackthebox yw4rf](https://old-blog-yw4rf.vercel.app/_astro/4-Fawn.CCEa5hgk_27PCOd.webp)
+![Fawn hackthebox yw4rf](https://old-blog-yw4rf.vercel.app/_astro/3-Fawn.aJfQzRP5_Z1M5RyJ.webp)
 
 `21/open/tcp//ftp/vsftpd 3.0.3/` We can conclude that the only open port is **21**, which runs the **FTP** protocol, and its version is **vsftpd 3.0.3**.
 ## FTP Enumeration
 To gather more information about port 21, we’ll perform a scan specifically on this port using the Nmap flag `-sCV`.
 
-![Fawn hackthebox yw4rf](https://old-blog-yw4rf.vercel.app/_astro/3-Fawn.aJfQzRP5_Z1M5RyJ.webp)
+![Fawn hackthebox yw4rf](https://old-blog-yw4rf.vercel.app/_astro/4-Fawn.CCEa5hgk_27PCOd.webp)
 
 We see that it says `ftp-anon: Anonymous FTP login allowed`, there is a file named `flag.txt`, and we are on a `UNIX` operating system.
    ```
